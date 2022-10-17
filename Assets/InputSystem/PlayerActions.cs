@@ -28,24 +28,33 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
             ""id"": ""fdc0b023-4b8a-4e5b-bd6b-35ea2fdc22f9"",
             ""actions"": [
                 {
-                    ""name"": ""WASD"",
+                    ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""0d78b7d7-9010-4d7b-8aff-11ba9b7eec03"",
                     ""expectedControlType"": ""Vector3"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""634e3d67-be35-4eab-af8d-171dfec4135c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""Movement"",
+                    ""name"": ""WASD"",
                     ""id"": ""ca74d523-b262-4597-a380-2faddacb64e3"",
                     ""path"": ""3DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""WASD"",
+                    ""action"": ""Movement"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -56,7 +65,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""WASD"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -67,7 +76,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""WASD"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -78,7 +87,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""WASD"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -89,9 +98,75 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""WASD"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""4a8fbc73-494e-4b0e-ae2d-6fce4e19986a"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""e0ce5e3a-2409-4b5e-ba3e-0139ff77b62f"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""24b85790-cf19-40c5-a083-28e31d67f87d"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""285c49ad-af8c-47dd-bc8e-8116a04f832d"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""43d8f88c-a32e-4284-84b1-0356ca58aad7"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4ab06cab-e991-4373-80ae-540be08af71e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -100,7 +175,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
 }");
         // Player_Map
         m_Player_Map = asset.FindActionMap("Player_Map", throwIfNotFound: true);
-        m_Player_Map_WASD = m_Player_Map.FindAction("WASD", throwIfNotFound: true);
+        m_Player_Map_Movement = m_Player_Map.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Map_Fire = m_Player_Map.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -160,12 +236,14 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     // Player_Map
     private readonly InputActionMap m_Player_Map;
     private IPlayer_MapActions m_Player_MapActionsCallbackInterface;
-    private readonly InputAction m_Player_Map_WASD;
+    private readonly InputAction m_Player_Map_Movement;
+    private readonly InputAction m_Player_Map_Fire;
     public struct Player_MapActions
     {
         private @PlayerActions m_Wrapper;
         public Player_MapActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @WASD => m_Wrapper.m_Player_Map_WASD;
+        public InputAction @Movement => m_Wrapper.m_Player_Map_Movement;
+        public InputAction @Fire => m_Wrapper.m_Player_Map_Fire;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -175,22 +253,29 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_Player_MapActionsCallbackInterface != null)
             {
-                @WASD.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnWASD;
-                @WASD.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnWASD;
-                @WASD.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnWASD;
+                @Movement.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnMovement;
+                @Fire.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnFire;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @WASD.started += instance.OnWASD;
-                @WASD.performed += instance.OnWASD;
-                @WASD.canceled += instance.OnWASD;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
             }
         }
     }
     public Player_MapActions @Player_Map => new Player_MapActions(this);
     public interface IPlayer_MapActions
     {
-        void OnWASD(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
     }
 }
