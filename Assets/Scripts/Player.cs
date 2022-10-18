@@ -1,11 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5;
-    private PlayerActions _playerActions;
+    private PlayerInput _playerInput;
     private Vector3 _moveInput;
+    private InputAction _moveAction;
+    private InputAction _fireAction;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -17,30 +20,38 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _playerActions = new PlayerActions();
+        _playerInput = GetComponent<PlayerInput>();
+        _moveAction = _playerInput.actions["Movement"];
+        _fireAction = _playerInput.actions["Fire"];
     }
 
     private void OnEnable()
     {
-        _playerActions.Player_Map.Enable();
+        _moveAction.Enable();
+        _fireAction.Enable();
+
+        _fireAction.performed += Fire;
     }
 
     private void OnDisable()
     {
-        _playerActions.Player_Map.Disable();
+        _moveAction.Disable();
+        _fireAction.Disable();
+
+        _fireAction.performed -= Fire;
     }
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
-        _playerActions.Player_Map.Fire.performed += _ => Fire();
     }
 
-    void Update()
+    private void Update()
     {
         CalculateMovement();
     }
 
-    void Fire()
+
+    void Fire(InputAction.CallbackContext ctx)
     {
         if (Time.time > _nextFire)
         {
@@ -52,7 +63,7 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
-        _moveInput = _playerActions.Player_Map.Movement.ReadValue<Vector3>();
+        _moveInput = _moveAction.ReadValue<Vector3>();
 
         transform.Translate(_moveInput * Time.deltaTime * _speed);
 

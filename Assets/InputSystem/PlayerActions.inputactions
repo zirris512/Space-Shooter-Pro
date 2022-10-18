@@ -81,17 +81,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Arrows",
-                    "id": "4a8fbc73-494e-4b0e-ae2d-6fce4e19986a",
-                    "path": "3DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "up",
                     "id": "e0ce5e3a-2409-4b5e-ba3e-0139ff77b62f",
                     "path": "<Keyboard>/upArrow",
