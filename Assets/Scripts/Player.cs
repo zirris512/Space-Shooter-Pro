@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.2f;
     private float _nextFire = 0;
+    [SerializeField]
+    private int _lives = 3;
 
 
     private void Awake()
@@ -27,14 +29,12 @@ public class Player : MonoBehaviour
     {
         _playerActions.Player_Map.Disable();
     }
-    // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _playerActions.Player_Map.Fire.performed += _ => Fire();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CalculateMovement();
@@ -68,5 +68,15 @@ public class Player : MonoBehaviour
             xPosition = 8;
         }
         transform.position = new Vector3(xPosition, yPosition, 0);
+    }
+
+    public void Damage()
+    {
+        _lives--;
+
+        if (_lives == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
