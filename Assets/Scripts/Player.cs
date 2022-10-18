@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private float _nextFire = 0;
     [SerializeField]
     private int _lives = 3;
+    private SpawnManager _spawnManager;
 
 
     private void Awake()
@@ -43,6 +44,11 @@ public class Player : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager not found!");
+        }
     }
 
     private void Update()
@@ -87,6 +93,7 @@ public class Player : MonoBehaviour
 
         if (_lives == 0)
         {
+            _spawnManager.OnPlayerDeath();
             Destroy(gameObject);
         }
     }

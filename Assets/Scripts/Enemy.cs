@@ -5,10 +5,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4;
 
-    void Start()
-    {
-        transform.position = setRandomPosition();
-    }
 
     void Update()
     {
