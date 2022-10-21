@@ -32,7 +32,7 @@ public class SpawnManager : MonoBehaviour
 
     Vector3 setRandomPosition()
     {
-        var randomX = Random.Range(-5.8f, 5.8f);
+        var randomX = Random.Range(-9, 9);
         return new Vector3(randomX, 8, 0);
     }
 

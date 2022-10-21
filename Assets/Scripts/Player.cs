@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
         if (Time.time > _nextFire)
         {
             _nextFire = Time.time + _fireRate;
-            var position = transform.position + new Vector3(0, 0.8f, 0);
+            var position = transform.position + new Vector3(0, 1, 0);
             Instantiate(_laserPrefab, position, Quaternion.identity);
         }
     }
@@ -76,13 +76,13 @@ public class Player : MonoBehaviour
         var yPosition = Mathf.Clamp(transform.position.y, -4, 0);
         var xPosition = transform.position.x;
 
-        if (xPosition >= 8)
+        if (xPosition >= 11.5f)
         {
-            xPosition = -8;
+            xPosition = -11.5f;
         }
-        else if (xPosition <= -8)
+        else if (xPosition <= -11.5f)
         {
-            xPosition = 8;
+            xPosition = 11.5f;
         }
         transform.position = new Vector3(xPosition, yPosition, 0);
     }
