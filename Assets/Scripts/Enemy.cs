@@ -26,12 +26,13 @@ public class Enemy : MonoBehaviour
                 {
                     player.Damage();
                 }
+                Destroy(gameObject);
                 break;
             case "Laser":
                 Destroy(other.gameObject);
+                Destroy(gameObject);
                 break;
         }
-        Destroy(gameObject);
     }
 
     Vector3 setRandomPosition()

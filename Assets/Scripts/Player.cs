@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,11 +13,16 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
+    private GameObject _tripleShotPrefab;
+    [SerializeField]
     private float _fireRate = 0.2f;
     private float _nextFire = 0;
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
+    [SerializeField]
+    private bool _isTripleShotActive = false;
+
 
 
     private void Awake()
@@ -63,7 +69,7 @@ public class Player : MonoBehaviour
         {
             _nextFire = Time.time + _fireRate;
             var position = transform.position + new Vector3(0, 1, 0);
-            Instantiate(_laserPrefab, position, Quaternion.identity);
+            Instantiate(_isTripleShotActive ? _tripleShotPrefab : _laserPrefab, position, Quaternion.identity);
         }
     }
 
@@ -96,5 +102,17 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(gameObject);
         }
+    }
+
+    public void toggleTripleShot()
+    {
+        _isTripleShotActive = true;
+        StartCoroutine(tripleShotTimer());
+    }
+
+    private IEnumerator tripleShotTimer()
+    {
+        yield return new WaitForSeconds(5);
+        _isTripleShotActive = false;
     }
 }
