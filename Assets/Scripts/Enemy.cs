@@ -22,10 +22,12 @@ public class Enemy : MonoBehaviour
         {
             case "Player":
                 Player player = other.transform.GetComponent<Player>();
+
                 if (player != null)
                 {
                     player.Damage();
                 }
+
                 Destroy(gameObject);
                 break;
             case "Laser":
