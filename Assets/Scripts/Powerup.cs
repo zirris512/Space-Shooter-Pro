@@ -40,7 +40,7 @@ public class Powerup : MonoBehaviour
                         player.toggleSpeedBoost();
                         break;
                     case TypeEnum.Shield:
-                        Debug.Log("Collected shield boost");
+                        player.toggleShield();
                         break;
 
                 }

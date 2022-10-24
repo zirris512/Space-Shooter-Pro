@@ -7,22 +7,33 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 5;
     private float _speedMultiplier = 2;
+
     private PlayerInput _playerInput;
     private Vector3 _moveInput;
     private InputAction _moveAction;
     private InputAction _fireAction;
+    private SpawnManager _spawnManager;
+
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _shieldVisualizer;
+
+    [SerializeField]
     private float _fireRate = 0.2f;
     private float _nextFire = 0;
+
     [SerializeField]
     private int _lives = 3;
-    private SpawnManager _spawnManager;
+    private float _powerupDuration = 5;
+
     private bool _isTripleShotActive = false;
     private bool _isSpeedBoostActive = false;
+    private bool _isShieldActive = false;
+    private bool _resetTripleShot = false;
+    private bool _resetSpeedBoost = false;
 
 
 
@@ -97,6 +108,12 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        if (_isShieldActive)
+        {
+            _isShieldActive = false;
+            _shieldVisualizer.SetActive(false);
+            return;
+        }
         _lives--;
 
         if (_lives == 0)
@@ -108,25 +125,66 @@ public class Player : MonoBehaviour
 
     public void toggleTripleShot()
     {
-        _isTripleShotActive = true;
         StartCoroutine(tripleShotTimer());
     }
 
     private IEnumerator tripleShotTimer()
     {
-        yield return new WaitForSeconds(5);
-        _isTripleShotActive = false;
+        if (!_isTripleShotActive)
+        {
+            _isTripleShotActive = true;
+            float timeStamp = Time.time;
+
+            while (Time.time < timeStamp + _powerupDuration)
+            {
+                if (_resetTripleShot)
+                {
+                    _resetTripleShot = false;
+                    timeStamp = Time.time;
+                }
+                yield return null;
+            }
+            _isTripleShotActive = false;
+        }
+        else
+        {
+            _resetTripleShot = true;
+        }
     }
 
     public void toggleSpeedBoost()
     {
-        _isSpeedBoostActive = true;
         StartCoroutine(speedBoostTimer());
     }
 
     private IEnumerator speedBoostTimer()
     {
-        yield return new WaitForSeconds(5);
-        _isSpeedBoostActive = false;
+        if (!_isSpeedBoostActive)
+        {
+            _isSpeedBoostActive = true;
+            float timeStamp = Time.time;
+
+            while (Time.time < timeStamp + _powerupDuration)
+            {
+                if (_resetSpeedBoost)
+                {
+                    _resetSpeedBoost = false;
+                    timeStamp = Time.time;
+                }
+                yield return null;
+            }
+            _isSpeedBoostActive = false;
+        }
+        else
+        {
+            _resetSpeedBoost = true;
+        }
+
+    }
+
+    public void toggleShield()
+    {
+        _isShieldActive = true;
+        _shieldVisualizer.SetActive(true);
     }
 }
