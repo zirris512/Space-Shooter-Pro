@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
+    private enum TypeEnum
+    {
+        TripleShot,
+        Speed,
+        Shield
+    }
     [SerializeField]
     private float _speed = 3;
+    [SerializeField]
+    private TypeEnum _type;
 
     void Update()
     {
@@ -23,7 +31,19 @@ public class Powerup : MonoBehaviour
 
             if (player != null)
             {
-                player.toggleTripleShot();
+                switch (_type)
+                {
+                    case TypeEnum.TripleShot:
+                        player.toggleTripleShot();
+                        break;
+                    case TypeEnum.Speed:
+                        player.toggleSpeedBoost();
+                        break;
+                    case TypeEnum.Shield:
+                        Debug.Log("Collected shield boost");
+                        break;
+
+                }
                 Destroy(gameObject);
             }
         }

@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5;
+    private float _speedMultiplier = 2;
     private PlayerInput _playerInput;
     private Vector3 _moveInput;
     private InputAction _moveAction;
@@ -20,8 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
-    [SerializeField]
     private bool _isTripleShotActive = false;
+    private bool _isSpeedBoostActive = false;
 
 
 
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
     {
         _moveInput = _moveAction.ReadValue<Vector3>();
 
-        transform.Translate(_moveInput * Time.deltaTime * _speed);
+        transform.Translate(_moveInput * Time.deltaTime * _speed * (_isSpeedBoostActive ? _speedMultiplier : 1));
 
         var yPosition = Mathf.Clamp(transform.position.y, -4, 0);
         var xPosition = transform.position.x;
@@ -115,5 +116,17 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         _isTripleShotActive = false;
+    }
+
+    public void toggleSpeedBoost()
+    {
+        _isSpeedBoostActive = true;
+        StartCoroutine(speedBoostTimer());
+    }
+
+    private IEnumerator speedBoostTimer()
+    {
+        yield return new WaitForSeconds(5);
+        _isSpeedBoostActive = false;
     }
 }
