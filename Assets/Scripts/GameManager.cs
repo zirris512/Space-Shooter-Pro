@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
         if (Keyboard.current.rKey.isPressed && _isGameOver)
         {
             //Current Game Scene
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
     }
 
