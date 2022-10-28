@@ -42,6 +42,18 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+        GameObject[] spawnedEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] spawnedPowerups = GameObject.FindGameObjectsWithTag("Powerup");
+
+        foreach (GameObject spawnedEnemy in spawnedEnemies)
+        {
+            Destroy(spawnedEnemy);
+        }
+
+        foreach (GameObject spawnedPowerup in spawnedPowerups)
+        {
+            Destroy(spawnedPowerup);
+        }
     }
 
     Vector3 setRandomPosition()
