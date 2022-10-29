@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
     private float _speed = 4;
 
     private Player _player;
+    private Animator _animator;
 
 
     void Start()
@@ -15,6 +16,13 @@ public class Enemy : MonoBehaviour
         if (_player == null)
         {
             Debug.LogError("Player not found!");
+        }
+
+        _animator = GetComponent<Animator>();
+
+        if (_animator == null)
+        {
+            Debug.LogError("Animator not found");
         }
 
     }
@@ -41,14 +49,22 @@ public class Enemy : MonoBehaviour
                     player.Damage();
                 }
 
-                Destroy(gameObject);
+                OnDeath();
                 break;
             case "Laser":
                 Destroy(other.gameObject);
                 _player.addToScore(10);
-                Destroy(gameObject);
+                OnDeath();
                 break;
         }
+    }
+
+    void OnDeath()
+    {
+        Destroy(GetComponent<BoxCollider2D>());
+        _speed = 2.5f;
+        _animator.SetTrigger("OnEnemyDeath");
+        Destroy(gameObject, 2.5f);
     }
 
     Vector3 setRandomPosition()
