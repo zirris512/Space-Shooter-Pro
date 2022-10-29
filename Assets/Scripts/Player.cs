@@ -21,10 +21,13 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private GameObject _shieldVisualizer;
+    [SerializeField]
+    private GameObject[] _damagedEngines;
 
     [SerializeField]
     private float _fireRate = 0.2f;
     private float _nextFire = 0;
+    private int _firstEngineDamaged;
 
     [SerializeField]
     private int _lives = 3;
@@ -128,7 +131,23 @@ public class Player : MonoBehaviour
 
         _uiManager.updateLives(_lives);
 
-        if (_lives == 0)
+        if (_lives == 2)
+        {
+            _firstEngineDamaged = Random.Range(0, 2);
+            _damagedEngines[_firstEngineDamaged].SetActive(true);
+        }
+        else if (_lives == 1)
+        {
+            if (_firstEngineDamaged == 0)
+            {
+                _damagedEngines[1].SetActive(true);
+            }
+            else
+            {
+                _damagedEngines[0].SetActive(true);
+            }
+        }
+        else
         {
             _spawnManager.OnPlayerDeath();
             Destroy(gameObject);
