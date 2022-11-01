@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private AudioClip _laserAudioClip;
+    [SerializeField]
+    private AudioClip _powerupAudioClip;
     private AudioSource _audioSource;
 
     [SerializeField]
@@ -74,28 +77,15 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
-        if (_spawnManager == null)
-        {
-            Debug.LogError("Spawn Manager not found!");
-        }
+        Assert.IsNotNull(_spawnManager);
 
         _uiManager = GameObject.Find("UI_Manager").GetComponent<UIManager>();
 
-        if (_uiManager == null)
-        {
-            Debug.LogError("UI Manager not found!");
-        }
+        Assert.IsNotNull(_uiManager);
 
         _audioSource = GetComponent<AudioSource>();
 
-        if (_audioSource == null)
-        {
-            Debug.LogError("AudioSource not found!");
-        }
-        else
-        {
-            _audioSource.clip = _laserAudioClip;
-        }
+        Assert.IsNotNull(_audioSource);
     }
 
     private void Update()
@@ -111,7 +101,7 @@ public class Player : MonoBehaviour
             _nextFire = Time.time + _fireRate;
             var position = transform.position + new Vector3(0, 1, 0);
             Instantiate(_isTripleShotActive ? _tripleShotPrefab : _laserPrefab, position, Quaternion.identity);
-            _audioSource.Play();
+            _audioSource.PlayOneShot(_laserAudioClip);
         }
     }
 
@@ -239,5 +229,10 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.updateScore(_score);
+    }
+
+    public void playPowerupAudio()
+    {
+        _audioSource.PlayOneShot(_powerupAudioClip);
     }
 }

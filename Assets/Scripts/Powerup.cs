@@ -13,6 +13,7 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private TypeEnum _type;
 
+
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -44,6 +45,8 @@ public class Powerup : MonoBehaviour
                         break;
 
                 }
+
+                player.playPowerupAudio();
                 Destroy(gameObject);
             }
         }
