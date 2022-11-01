@@ -30,6 +30,10 @@ public class Player : MonoBehaviour
     private int _firstEngineDamaged;
 
     [SerializeField]
+    private AudioClip _laserAudioClip;
+    private AudioSource _audioSource;
+
+    [SerializeField]
     private int _lives = 3;
     [SerializeField]
     private int _score = 0;
@@ -81,6 +85,17 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("UI Manager not found!");
         }
+
+        _audioSource = GetComponent<AudioSource>();
+
+        if (_audioSource == null)
+        {
+            Debug.LogError("AudioSource not found!");
+        }
+        else
+        {
+            _audioSource.clip = _laserAudioClip;
+        }
     }
 
     private void Update()
@@ -96,6 +111,7 @@ public class Player : MonoBehaviour
             _nextFire = Time.time + _fireRate;
             var position = transform.position + new Vector3(0, 1, 0);
             Instantiate(_isTripleShotActive ? _tripleShotPrefab : _laserPrefab, position, Quaternion.identity);
+            _audioSource.Play();
         }
     }
 

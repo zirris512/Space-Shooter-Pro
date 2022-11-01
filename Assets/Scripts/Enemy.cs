@@ -8,6 +8,10 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private Animator _animator;
 
+    [SerializeField]
+    private AudioClip _explosionAudioClip;
+    private AudioSource _audioSource;
+
 
     void Start()
     {
@@ -22,9 +26,19 @@ public class Enemy : MonoBehaviour
 
         if (_animator == null)
         {
-            Debug.LogError("Animator not found");
+            Debug.LogError("Animator not found!");
         }
 
+        _audioSource = GetComponent<AudioSource>();
+
+        if (_audioSource == null)
+        {
+            Debug.LogError("Enemy AudioSource not found!");
+        }
+        else
+        {
+            _audioSource.clip = _explosionAudioClip;
+        }
     }
 
     void Update()
@@ -64,6 +78,7 @@ public class Enemy : MonoBehaviour
         Destroy(GetComponent<BoxCollider2D>());
         _speed = 2.5f;
         _animator.SetTrigger("OnEnemyDeath");
+        _audioSource.Play();
         Destroy(gameObject, 2.5f);
     }
 
