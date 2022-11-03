@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 5;
     private float _speedMultiplier = 2;
+    private bool _isInvulnerable = false;
+    private float _invulnerableTime = 2;
 
     private PlayerInput _playerInput;
     private Vector3 _moveInput;
@@ -93,6 +95,13 @@ public class Player : MonoBehaviour
         CalculateMovement();
     }
 
+    IEnumerator BecomeInvulnerable()
+    {
+        _isInvulnerable = true;
+        yield return new WaitForSeconds(_invulnerableTime);
+        _isInvulnerable = false;
+    }
+
 
     void Fire(InputAction.CallbackContext ctx)
     {
@@ -133,6 +142,9 @@ public class Player : MonoBehaviour
             _shieldVisualizer.SetActive(false);
             return;
         }
+
+        if (_isInvulnerable) return;
+
         _lives--;
 
         _uiManager.updateLives(_lives);
@@ -158,6 +170,8 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(gameObject);
         }
+
+        StartCoroutine(BecomeInvulnerable());
     }
 
     public void toggleTripleShot()

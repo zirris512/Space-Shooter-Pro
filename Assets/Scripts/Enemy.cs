@@ -4,6 +4,11 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4;
+    private float _fireRate = 2;
+    private float _canFire = 0;
+    private bool _isDead = false;
+    [SerializeField]
+    private GameObject _laserPrefab;
 
     private Player _player;
     private Animator _animator;
@@ -43,12 +48,38 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        CalculateMovement();
+        if (Time.time > _canFire)
+        {
+            _fireRate = Random.Range(3, 6);
+            _canFire = Time.time + _fireRate;
+            if (!_isDead)
+            {
+                EnemyFire();
+            }
+        }
+    }
+
+    void EnemyFire()
+    {
+        GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+        foreach (Laser laser in lasers)
+        {
+            laser.AssignEnemyLaser();
+        }
+    }
+
+    void CalculateMovement()
+    {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if (transform.position.y <= -9f)
         {
             transform.position = setRandomPosition();
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -66,6 +97,11 @@ public class Enemy : MonoBehaviour
                 OnDeath();
                 break;
             case "Laser":
+                Laser laser = other.transform.GetComponent<Laser>();
+                if (laser.IsEnemyLaser())
+                {
+                    return;
+                }
                 Destroy(other.gameObject);
                 _player.addToScore(10);
                 OnDeath();
@@ -75,6 +111,7 @@ public class Enemy : MonoBehaviour
 
     void OnDeath()
     {
+        _isDead = true;
         Destroy(GetComponent<BoxCollider2D>());
         _speed = 2.5f;
         _animator.SetTrigger("OnEnemyDeath");
