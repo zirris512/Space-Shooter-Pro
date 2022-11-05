@@ -102,6 +102,21 @@ public class Player : MonoBehaviour
         _isInvulnerable = false;
     }
 
+    IEnumerator InvulnerableFlash()
+    {
+        SpriteRenderer playerSprite = GetComponent<SpriteRenderer>();
+
+        Assert.IsNotNull(playerSprite);
+
+        while (_isInvulnerable)
+        {
+            playerSprite.enabled = false;
+            yield return new WaitForSeconds(0.2f);
+            playerSprite.enabled = true;
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
 
     void Fire(InputAction.CallbackContext ctx)
     {
@@ -172,6 +187,7 @@ public class Player : MonoBehaviour
         }
 
         StartCoroutine(BecomeInvulnerable());
+        StartCoroutine(InvulnerableFlash());
     }
 
     public void toggleTripleShot()
