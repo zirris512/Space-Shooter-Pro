@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 245142530}
   - component: {fileID: 245142534}
   - component: {fileID: 245142535}
+  - component: {fileID: 245142536}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -248,7 +249,27 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0d78b7d7-9010-4d7b-8aff-11ba9b7eec03
+    m_ActionName: Player_Map/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 634e3d67-be35-4eab-af8d-171dfec4135c
+    m_ActionName: Player_Map/Fire[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player_Map
@@ -471,6 +492,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &245142536
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245142529}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 01e2895837030f14f9f294519970b08d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &324434798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1996,10 +2037,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 838820153, guid: 7d1c5d621d01d2a41bc5ae0017c9e448, type: 3}
-      propertyPath: _explosion
-      value: 
-      objectReference: {fileID: 2196791387169334293, guid: b4b9421e6c46d1d4c8e6eb9282b5f17b, type: 3}
     - target: {fileID: 1899413023244886097, guid: 7d1c5d621d01d2a41bc5ae0017c9e448, type: 3}
       propertyPath: m_Name
       value: Asteroid

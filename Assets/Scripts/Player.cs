@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private InputAction _fireAction;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
+    private Animator _playerAnimator;
 
     [SerializeField]
     private GameObject _laserPrefab;
