@@ -95,10 +95,10 @@ public class Player : MonoBehaviour
         CalculateMovement();
     }
 
-    IEnumerator BecomeInvulnerable()
+    IEnumerator BecomeInvulnerable(float time = 0.5f)
     {
         _isInvulnerable = true;
-        yield return new WaitForSeconds(_invulnerableTime);
+        yield return new WaitForSeconds(time);
         _isInvulnerable = false;
     }
 
@@ -155,6 +155,7 @@ public class Player : MonoBehaviour
         {
             _isShieldActive = false;
             _shieldVisualizer.SetActive(false);
+            StartCoroutine(BecomeInvulnerable());
             return;
         }
 
@@ -186,7 +187,7 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
         }
 
-        StartCoroutine(BecomeInvulnerable());
+        StartCoroutine(BecomeInvulnerable(_invulnerableTime));
         StartCoroutine(InvulnerableFlash());
     }
 
