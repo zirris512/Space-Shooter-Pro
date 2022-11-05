@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
             //Current Game Scene
             SceneManager.LoadScene(1);
         }
+
+        if (Keyboard.current.escapeKey.isPressed)
+        {
+            Application.Quit();
+        }
     }
 
     public void GameOver()
