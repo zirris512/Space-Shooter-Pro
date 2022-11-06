@@ -64,16 +64,12 @@ public class Player : MonoBehaviour
     {
         _moveAction.Enable();
         _fireAction.Enable();
-
-        _fireAction.performed += Fire;
     }
 
     private void OnDisable()
     {
         _moveAction.Disable();
         _fireAction.Disable();
-
-        _fireAction.performed -= Fire;
     }
     void Start()
     {
@@ -85,6 +81,10 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("UI_Manager").GetComponent<UIManager>();
 
         Assert.IsNotNull(_uiManager);
+
+        _playerAnimator = GetComponent<Animator>();
+
+        Assert.IsNotNull(_playerAnimator);
 
         _audioSource = GetComponent<AudioSource>();
 
@@ -119,7 +119,28 @@ public class Player : MonoBehaviour
     }
 
 
-    void Fire(InputAction.CallbackContext ctx)
+    void OnMovement(InputValue value)
+    {
+        var direction = value.Get<Vector3>();
+
+        Debug.Log(direction.x);
+
+        if (direction.x > 0)
+        {
+            _playerAnimator.SetBool("MoveRight", true);
+        }
+        else if (direction.x < 0)
+        {
+            _playerAnimator.SetBool("MoveLeft", true);
+        }
+        else
+        {
+            _playerAnimator.SetBool("MoveLeft", false);
+            _playerAnimator.SetBool("MoveRight", false);
+        }
+    }
+
+    void OnFire()
     {
         if (Time.time > _nextFire)
         {
@@ -134,7 +155,10 @@ public class Player : MonoBehaviour
     {
         _moveInput = _moveAction.ReadValue<Vector3>();
 
+
         transform.Translate(_moveInput * Time.deltaTime * _speed * (_isSpeedBoostActive ? _speedMultiplier : 1));
+
+
 
         var yPosition = Mathf.Clamp(transform.position.y, -4, 0);
         var xPosition = transform.position.x;
