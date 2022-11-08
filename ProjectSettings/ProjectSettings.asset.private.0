@@ -705,13 +705,7 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Build: 0
-    Collab: 0
-    Game Performance: 0
-    Purchasing: 0
-    UDP: 0
     UNet: 1
-    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -726,11 +720,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 6a8b333f-7bcc-4421-9cb6-f520b137b4ff
+  cloudProjectId: f62b94f5-b219-4d37-b005-f5843c4988c9
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Space Shooter Pro
-  organizationId: luhuli
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
